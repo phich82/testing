@@ -68,6 +68,6 @@ Route::get('test', function () {
             ]
         ]
     ];
-    $paginator = Comment::paginate(1);
-    return view('test', compact('paginator'));
+    $comments = Comment::paginate(1);
+    return view('test', compact('comments'));
 });
