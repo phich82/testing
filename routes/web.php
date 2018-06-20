@@ -12,12 +12,14 @@
 */
 
 use App\Comment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('test', function () {
+Route::get('test', function (Request $request) {
     $ppbf = [
         [
             'unit_id' => '137000',
@@ -68,6 +70,14 @@ Route::get('test', function () {
             ]
         ]
     ];
-    $comments = Comment::paginate(1);
-    return view('test', compact('comments'));
+    $comments = Comment::paginate(2);
+
+    if ($request->ajax()) {
+        return view('presult', compact('comments'));
+    }
+    return view('comment', compact('comments'));
 });
+
+Route::get('mile/accumulation/promotion/create', 'TestController@createPromotion')->name('admin.mile.promotion.create');
+Route::get('mile/accumulation/basic/create', 'TestController@createBasic')->name('admin.mile.create');
+Route::post('mile/accumulation/basic/store', 'TestController@storeBasic')->name('admin.mile.store');
